@@ -1,0 +1,21 @@
+$kind: http-request
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0c6e}}"
+order: 1791465726697
+url: "{{baseUrl}}/leads"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Naman Singh",
+      "email": "naman@info.com",
+      "company":"Wipro",
+      "phone": "8762567892",
+      "source": "social_media"
+    }

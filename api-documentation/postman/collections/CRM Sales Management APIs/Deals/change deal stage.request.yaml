@@ -1,0 +1,23 @@
+$kind: http-request
+name: Change deal stage
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0tp6}}"
+order: 1791466382000
+url: "{{baseUrl}}/deals/{{dealId}}/stage"
+method: PATCH
+headers:
+  Accept: application/json
+  Content-Type: application/json
+pathVariables:
+  - key: dealId
+    value: "1"
+    description: ID of the deal whose stage will be changed
+body:
+  type: json
+  content: |-
+    {
+      "stage": "lost",
+      "lostReason":"the deal value is very less"
+    }

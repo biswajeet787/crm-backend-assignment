@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/leads/assigned-to-me"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0sw1}}"
+order: 1791466225911

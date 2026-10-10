@@ -1,0 +1,11 @@
+$kind: http-request
+name: Get customers
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0dfe}}"
+order: 1791466374000
+url: "{{baseUrl}}/customers"
+method: GET
+headers:
+  Accept: application/json

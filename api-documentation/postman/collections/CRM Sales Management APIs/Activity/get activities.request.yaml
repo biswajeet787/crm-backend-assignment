@@ -1,0 +1,11 @@
+$kind: http-request
+name: Get activities
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_10o8}}"
+order: 1791466384000
+url: "{{baseUrl}}/activities"
+method: GET
+headers:
+  Accept: application/json

@@ -1,0 +1,41 @@
+$kind: http-request
+url: "{{baseUrl}}/leads/{{}}/convert"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"customer\": {\r
+
+    \    \"name\": \"Mandeep Thakur\",\r
+
+    \    \"email\": \"mandeep@info.com\",\r
+
+    \    \"phone\": \"8762567890\",\r
+
+    \    \"company\": \"Wipro\",\r
+
+    \    \"address\": \"Bengaluru, Karnataka, India\"\r
+
+    \  },\r
+
+    \  \"deal\": {\r
+
+    \    \"name\": \"Wipro CRM Implementation\",\r
+
+    \    \"amount\": 250000,\r
+
+    \    \"probability\": 75,\r
+
+    \    \"expectedClosingDate\": \"2026-11-30T00:00:00.000Z\",\r
+
+    \    \"description\": \"CRM implementation project for Wipro, including customer management and sales workflow automation.\"\r
+
+    \  }\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_13vp}}"
+order: 1791466274007

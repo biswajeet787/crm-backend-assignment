@@ -1,0 +1,22 @@
+$kind: http-request
+name: Update lead
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0jn3}}"
+order: 3211546693033348
+url: "{{baseUrl}}/leads/{{leadId}}"
+method: PUT
+headers:
+  Accept: application/json
+  Content-Type: application/json
+pathVariables:
+  - key: leadId
+    value: "1"
+    description: ID of the lead to update
+body:
+  type: json
+  content: |-
+    {
+      "company":"IBM"
+    }

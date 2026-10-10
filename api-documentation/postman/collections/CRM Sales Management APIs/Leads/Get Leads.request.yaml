@@ -1,0 +1,11 @@
+$kind: http-request
+name: Get leads
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_03hn}}"
+order: 1877046307887757
+url: "{{baseUrl}}/leads"
+method: GET
+headers:
+  Accept: application/json

@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{baseUrl}}/customers"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"name\": \"Acme Corporation\",\r
+
+    \  \"email\": \"contact@acme.example\",\r
+
+    \  \"phone\": \"1555501223\",\r
+
+    \  \"company\": \"Acme Inc.\",\r
+
+    \  \"address\": \"123 Market Street, San Francisco, CA 94105\",\r
+
+    \  \"assignedTo\": \"64b64c8f2f3a1b7d9e6c1234\",\r
+
+    \  \"status\": \"active\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0v2n}}"
+order: 1791466373002

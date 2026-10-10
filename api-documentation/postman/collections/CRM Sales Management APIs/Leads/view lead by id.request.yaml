@@ -1,0 +1,15 @@
+$kind: http-request
+name: Get lead by ID
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_09ba}}"
+order: 2756235352145092
+url: "{{baseUrl}}/leads/{{leadId}}"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  - key: leadId
+    value: "1"
+    description: ID of the lead to retrieve

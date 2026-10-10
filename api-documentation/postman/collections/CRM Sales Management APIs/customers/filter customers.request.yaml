@@ -1,0 +1,21 @@
+$kind: http-request
+name: Filter customers
+order: 1791466379000
+url: '{{baseUrl}}/customers?status=active&type=business&page=1&limit=20'
+method: GET
+headers:
+  - key: Accept
+    value: application/json
+queryParams:
+  - key: status
+    value: active
+    description: Filter by customer status
+  - key: type
+    value: business
+    description: Filter by customer type
+  - key: page
+    value: '1'
+    description: Results page
+  - key: limit
+    value: '20'
+    description: Number of results per page

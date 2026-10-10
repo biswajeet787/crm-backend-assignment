@@ -1,0 +1,22 @@
+$kind: http-request
+name: Update customer
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0c6e}}"
+order: 1791466376000
+url: "{{baseUrl}}/customers/{{customerId}}"
+method: PATCH
+headers:
+  Accept: application/json
+  Content-Type: application/json
+pathVariables:
+  - key: customerId
+    value: "1"
+    description: ID of the customer to update
+body:
+  type: json
+  content: |-
+    {
+        "address": "Hyderabad, Telangana, India"
+      }

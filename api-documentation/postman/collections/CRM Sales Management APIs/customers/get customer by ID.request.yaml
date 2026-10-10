@@ -1,0 +1,15 @@
+$kind: http-request
+name: Get customer by ID
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0dfe}}"
+order: 1791466375000
+url: "{{baseUrl}}/customers/{{customerId}}"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  - key: customerId
+    value: "1"
+    description: ID of the customer to retrieve

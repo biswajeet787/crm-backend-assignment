@@ -1,0 +1,15 @@
+$kind: http-request
+name: Get activity by ID
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0qcr}}"
+order: 1791466385000
+url: "{{baseUrl}}/activities/{{activityId}}"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  - key: activityId
+    value: "1"
+    description: ID of the activity to retrieve

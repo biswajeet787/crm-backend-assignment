@@ -1,0 +1,12 @@
+$kind: http-request
+name: Delete customer where permitted
+order: 1791466377000
+url: '{{baseUrl}}/customers/{{customerId}}'
+method: DELETE
+headers:
+  - key: Accept
+    value: application/json
+pathVariables:
+  - key: customerId
+    value: '1'
+    description: ID of the customer to delete when permitted

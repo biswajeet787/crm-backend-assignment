@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/register"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"name\":\"Mahendra Singh\",\r
+
+    \    \"email\":\"mahi123@gmail.com\",\r
+
+    \    \"phone\":\"9827834521\",\r
+
+    \    \"password\":\"Mahi@123\",\r
+
+    \    \"role\":\"sales_executive\"\r
+
+    }"

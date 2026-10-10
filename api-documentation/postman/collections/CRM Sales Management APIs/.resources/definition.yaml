@@ -1,0 +1,69 @@
+$kind: collection
+description: Complete CRM API request collection for authentication, users, leads, customers, deals, activities, and dashboard operations.
+variables:
+  - key: baseUrl
+    value: http://localhost:5000/api
+    disabled: false
+  - key: json_web_token_07rn
+    secret: true
+    disabled: false
+  - key: json_web_token_0aqv
+    secret: true
+    disabled: false
+  - key: json_web_token_10bd
+    secret: true
+    disabled: false
+  - key: json_web_token_16nj
+    secret: true
+    disabled: false
+  - key: json_web_token_09ba
+    secret: true
+    disabled: false
+  - key: json_web_token_0jn3
+    secret: true
+    disabled: false
+  - key: json_web_token_13vp
+    secret: true
+    disabled: false
+  - key: json_web_token_0c6e
+    secret: true
+    disabled: false
+  - key: json_web_token_0tp6
+    secret: true
+    disabled: false
+  - key: json_web_token_0qcr
+    secret: true
+    disabled: false
+  - key: json_web_token_0s2s
+    secret: true
+    disabled: false
+  - key: json_web_token_10o8
+    secret: true
+    disabled: false
+  - key: json_web_token_06q7
+    secret: true
+    disabled: false
+  - key: json_web_token_18ip
+    secret: true
+    disabled: false
+  - key: json_web_token_0sw1
+    secret: true
+    disabled: false
+  - key: json_web_token_03hn
+    secret: true
+    disabled: false
+  - key: json_web_token_0fuy
+    secret: true
+    disabled: false
+  - key: json_web_token_04ux
+    secret: true
+    disabled: false
+  - key: json_web_token_0v2n
+    secret: true
+    disabled: false
+  - key: json_web_token_0ck9
+    secret: true
+    disabled: false
+  - key: json_web_token_0dfe
+    secret: true
+    disabled: false

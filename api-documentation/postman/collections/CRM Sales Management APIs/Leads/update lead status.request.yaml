@@ -1,0 +1,18 @@
+$kind: http-request
+name: Update lead status
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0jn3}}"
+order: 3941942620190344
+url: "{{baseUrl}}/leads/{{leadId}}/status"
+method: PATCH
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "status": "qualified"
+    }

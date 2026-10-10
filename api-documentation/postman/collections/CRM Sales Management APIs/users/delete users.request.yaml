@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/users/6ac89a945690de8f43c528da"
+method: DELETE
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_10o8}}"
+order: 1648559866773503

@@ -1,0 +1,13 @@
+$kind: http-request
+name: View deals
+queryParams:
+  stage: won
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0tp6}}"
+order: 1791466380000
+url: "{{baseUrl}}/deals?stage=won"
+method: GET
+headers:
+  Accept: application/json

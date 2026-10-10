@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/logout"
+method: POST
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0ck9}}"
+order: 3183996440674303

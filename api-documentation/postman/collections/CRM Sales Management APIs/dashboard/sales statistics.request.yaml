@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/analytics/summary"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_10o8}}"
+order: 1791468205883

@@ -1,0 +1,23 @@
+$kind: http-request
+name: Create activity
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_10o8}}"
+order: 1791466383000
+url: "{{baseUrl}}/activities"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Follow up with upcoming customer",
+      "type": "email",
+      "description": "Discuss next steps",
+      "dueAt": "2026-10-09T10:00:00Z",
+      "entityType": "lead",
+      "entityId": "6ac8cc89701c00bcb6779222"
+    }

@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/users/6ac92d803f0a9e0b80e9988b"
+method: PATCH
+body:
+  type: json
+  content: "{\r
+
+    \    \"managerEmail\":\"sipusagar123@gmail.com\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_10o8}}"
+order: 3166560661274623

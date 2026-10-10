@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/me"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_06q7}}"
+order: 3752644458840063

@@ -1,0 +1,22 @@
+$kind: http-request
+name: Mark activity as completed
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0qcr}}"
+order: 1791466387000
+url: "{{baseUrl}}/activities/{{activityId}}/complete"
+method: PATCH
+headers:
+  Accept: application/json
+  Content-Type: application/json
+pathVariables:
+  - key: activityId
+    value: "1"
+    description: ID of the activity to mark as completed
+body:
+  type: json
+  content: |-
+    {
+      "completed": true
+    }

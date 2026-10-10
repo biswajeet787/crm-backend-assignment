@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/users?role=sales_manager"
+method: GET
+queryParams:
+  role: sales_manager
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0fuy}}"
+order: 3456882639372287

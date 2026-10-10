@@ -1,0 +1,11 @@
+$kind: http-request
+url: "{{baseUrl}}/users/6ac89a945690de8f43c528da/status"
+method: PATCH
+body:
+  type: json
+  content: "{\r\n    \"isActive\":false\r\n}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_16nj}}"
+order: 2934002019205119

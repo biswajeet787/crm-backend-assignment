@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/timeline/lead/6ac8cc89701c00bcb6779222"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0dfe}}"
+order: 1000

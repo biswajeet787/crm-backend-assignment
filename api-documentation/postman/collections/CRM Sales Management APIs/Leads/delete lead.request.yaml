@@ -1,0 +1,15 @@
+$kind: http-request
+name: Delete lead where permitted
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0c6e}}"
+order: 4465531245420163
+url: "{{baseUrl}}/leads/{{leadId}}"
+method: DELETE
+headers:
+  Accept: application/json
+pathVariables:
+  - key: leadId
+    value: "1"
+    description: ID of the lead to delete when permitted

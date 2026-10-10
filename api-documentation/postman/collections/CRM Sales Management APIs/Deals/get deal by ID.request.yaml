@@ -1,0 +1,15 @@
+$kind: http-request
+name: Get deal by ID
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0tp6}}"
+order: 1791466381000
+url: "{{baseUrl}}/deals/{{dealId}}"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  - key: dealId
+    value: "1"
+    description: ID of the deal to retrieve
