@@ -1,110 +1,174 @@
-# Assignment Setup Guide
+# CRM Sales Management API — Setup Guide
 
-This guide walks through installing and running the CRM Sales Management API locally.
+This guide explains how to configure, run, and test the CRM Sales Management API locally and access the deployed application.
+
+## Live Deployment
+
+The CRM Sales Management API is deployed on Render.
+
+- **Live API:** https://crm-backend-assignment-onc1.onrender.com/
+- **Health Check:** https://crm-backend-assignment-onc1.onrender.com/health
+- **API Base URL:** https://crm-backend-assignment-onc1.onrender.com/api
+
+The root endpoint returns a welcome message confirming that the API is running. The health endpoint reports the API status and database connection state.
+
+### Live API Homepage
+
+The following screenshot shows the deployed API's root endpoint responding successfully.
+
+![CRM Sales Management API running on Render](screenshots/api-homepage.png)
 
 ## Prerequisites
 
 - An active Node.js LTS release with npm
-- MongoDB and a connection URI
-- PowerShell or Terminal on Windows, or a terminal on macOS/Linux
+- MongoDB running locally or a reachable MongoDB Atlas deployment
+- PowerShell or Command Prompt on Windows, or a terminal on macOS/Linux
+- Postman for API testing
 
-Lead conversion uses MongoDB transactions. Use a replica set or sharded MongoDB deployment for that workflow; a standalone MongoDB server can run the API but cannot convert leads.
+Lead conversion uses MongoDB transactions. Use a replica set or sharded MongoDB deployment for this workflow.
 
-## 1. Install dependencies
+## 1. Install Dependencies
 
 From the project root, open a terminal and run:
 
-powershell
+```powershell
 Set-Location .\source-code
 npm install
+```
 
-For macOS or Linux, use `cd source-code` instead of `Set-Location`.
+On macOS or Linux, use:
 
-## 2. Configure the environment
+```bash
+cd source-code
+npm install
+```
 
-Create a file named `.env` in the `source-code/` directory. Add the following settings and replace the sample secrets with your own unique values. Each JWT secret must be at least 32 characters, and the two secrets should differ.
+## 2. Configure Environment Variables
 
-dotenv
+Create a file named `.env` inside the `source-code/` directory.
 
+Example configuration for local development:
+
+```dotenv
 NODE_ENV=development
-PORT=8000
+PORT=5000
 MONGODB_URI=mongodb://127.0.0.1:27017/crm_sales_management
 JWT_SECRET=replace-with-a-unique-secret-at-least-32-characters-long
 JWT_REFRESH_SECRET=replace-with-a-different-unique-secret-at-least-32-characters
 ACCESS_TOKEN_TTL=2h
 CORS_ORIGIN=http://localhost:5173
+```
 
-If MongoDB is hosted remotely, replace `MONGODB_URI` with its connection string. Set `CORS_ORIGIN` to your frontend's origin, or a comma-separated list of allowed origins. Keep `.env` private; it is ignored by Git.
+Replace the sample MongoDB URI with your actual connection string if you use MongoDB Atlas. Generate unique JWT secrets, each at least 32 characters long, and keep `.env` private.
 
-## 3. Start MongoDB and the API
+Set `CORS_ORIGIN` to the origin of your frontend application. If you do not have a browser-based frontend, configure this value according to your backend's environment validation requirements.
 
-Make sure the MongoDB deployment from `MONGODB_URI` is running. In a terminal with the current directory set to `source-code/`, start the development server:
+For the deployed service, environment variables are configured in the Render dashboard. Do not commit real credentials or secrets to GitHub.
 
-cmd 
+## 3. Start the API Locally
+
+Ensure that MongoDB is running and reachable through `MONGODB_URI`.
+
+From the `source-code/` directory, run:
+
+```bash
 npm run dev
+```
 
-The API listens on `http://localhost:8000` by default. Change `PORT` in `.env` to use another port. The HTTP server starts listening before the database connection finishes.
+The API listens on port `5000` by default.
+
+Local URLs:
+
+- **Base URL:** http://localhost:5000/
+- **Health Check:** http://localhost:5000/health
+- **API Base URL:** http://localhost:5000/api
+
+If you change `PORT` in `.env`, use the configured port when testing locally.
 
 ## 4. Verify the API
 
-Open a second terminal and request the health endpoint:
+Open a browser or a second terminal and request:
 
 ```powershell
-Invoke-RestMethod http://localhost:8000/health
+Invoke-RestMethod http://localhost:5000/health
 ```
 
-The response reports the API status and MongoDB connection state. Confirm that `database` is `connected` before using CRM endpoints.
+The response should report the API status and MongoDB connection state. Confirm that the `database` field is `connected` before testing database-dependent endpoints.
 
-## 5. Create the initial admin account
+You can also open the deployed health endpoint:
 
-Admin seeding is optional if you only need to try public registration and standard user endpoints. To use admin-only features, add these settings to `source-code/.env`:
+https://crm-backend-assignment-onc1.onrender.com/health
+
+## 5. Create the Initial Admin Account
+
+Admin seeding is optional when testing public registration and standard user endpoints.
+
+To create an administrator, add the following variables to `source-code/.env`:
 
 ```dotenv
 SEED_ADMIN_NAME=Your Admin Name
 SEED_ADMIN_EMAIL=admin@example.com
 SEED_ADMIN_PHONE=1234567890
-SEED_ADMIN_PASSWORD=replace-with-a-password-at-least-12-characters-long
+SEED_ADMIN_PASSWORD=replace-with-a-strong-password
 ```
 
-From `source-code/`, run:
+From the `source-code/` directory, run:
 
-```powershell
+```bash
 npm run seed:admin
 ```
 
-The script creates one active admin account. It exits with an error if an account already exists for that email. Sign in using `POST /api/auth/login`, then remove `SEED_ADMIN_PASSWORD` from `.env` after seeding.
+Use the configured administrator credentials to sign in through `POST /api/auth/login`. After successful seeding, remove `SEED_ADMIN_PASSWORD` from `.env` if it is no longer needed.
 
-## 6. Send requests from Postman
+Do not publish real administrator credentials.
 
-The request definitions are in `api-documentation/postman/collections/CRM Sales Management APIs`. Set the `baseUrl` variable to:
+## 6. Test the API with Postman
+
+The Postman request definitions are available in:
+
+`api-documentation/postman/collections/CRM Sales Management APIs`
+
+Configure the Postman `baseUrl` variable using one of the following values.
+
+**Local development**
 
 ```text
-http://localhost:8000/api
+http://localhost:5000/api
 ```
 
-Sign in first, then send the returned `accessToken` as a bearer token for protected routes. Postman should retain the HTTP-only refresh cookie for session refresh and logout requests.
+**Live deployment**
 
-## Useful project commands
+```text
+https://crm-backend-assignment-onc1.onrender.com/api
+```
 
-Run these from `source-code/`:
+Register or sign in first. Use the returned access token as a bearer token for protected endpoints. Postman should retain the HTTP-only refresh cookie for refresh and logout requests.
+
+## Useful Project Commands
+
+Run these commands from the `source-code/` directory.
 
 | Command | Purpose |
-| --- | --- |
-| `npm run dev` | Start the development server with automatic restarts. |
-| `npm run typecheck` | Check TypeScript types. |
-| `npm run build` | Compile the TypeScript source into `dist/`. |
-| `npm start` | Start the compiled server. Run `npm run build` first. |
-| `npm run seed:admin` | Create the initial admin account from the `SEED_ADMIN_*` variables. |
-| `npm run db:indexes` | Create indexes for the MongoDB models. |
+|---|---|
+| `npm install` | Install dependencies |
+| `npm run dev` | Start the development server |
+| `npm run typecheck` | Check TypeScript types |
+| `npm run build` | Compile TypeScript into `dist/` |
+| `npm start` | Start the compiled application |
+| `npm run seed:admin` | Create the initial administrator |
+| `npm run db:indexes` | Create database indexes |
 
 ## Troubleshooting
 
-- **Environment validation fails:** Check that `MONGODB_URI`, `JWT_SECRET`, and `JWT_REFRESH_SECRET` are set. Confirm both JWT secrets are at least 32 characters.
+- **Environment validation fails:** Check the required environment variables and ensure both JWT secrets meet the minimum length.
+- **MongoDB is disconnected:** Verify `MONGODB_URI`, database credentials, network access rules, and MongoDB availability.
+- **Lead conversion fails:** Verify that MongoDB supports transactions through a replica set or sharded deployment.
+- **Browser requests fail CORS checks:** Configure `CORS_ORIGIN` with the correct frontend origin, including the scheme and port where applicable.
+- **Port is already in use:** Choose a free port and update the local health-check and Postman URLs.
+- **The API returns `404` for an unknown path:** Verify the endpoint path and HTTP method. The root endpoint (`/`) and health endpoint (`/health`) are available for basic checks.
 
-- **Health response says MongoDB is disconnected:** Check that MongoDB is running and that `MONGODB_URI` is correct and reachable.
+## Security Notes
 
-- **Lead conversion fails due to transactions:** Use a replica set or sharded MongoDB deployment.
-
-- **Browser requests fail CORS checks:** Set `CORS_ORIGIN` to the exact frontend origin, including its scheme and port.
-
-- **Port is already in use:** Set `PORT` to a free port and use that port in the health check and Postman `baseUrl`.
+- Never commit `.env` files, database passwords, JWT secrets, or administrator credentials.
+- Keep `.env.example` populated with placeholders only.
+- Avoid publishing screenshots containing personal information, password hashes, access tokens, refresh-token hashes, or other sensitive data.

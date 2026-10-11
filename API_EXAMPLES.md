@@ -1,11 +1,11 @@
 # Sample API Requests and Responses
 
-These examples target the deployed API at [https://crm-backend-assignment-pvqh.onrender.com](https://crm-backend-assignment-pvqh.onrender.com). Replace sample IDs and credentials with values from your database. Request bodies are JSON. Protected routes require an access token unless an example says otherwise.
+These examples target the deployed API at [https://crm-backend-assignment-onc1.onrender.com](https://crm-backend-assignment-onc1.onrender.com). Replace sample IDs and credentials with values from your database. Request bodies are JSON. Protected routes require an access token unless an example says otherwise.
 
 Set the Postman `baseUrl` variable to:
 
 ```text
-https://crm-backend-assignment-pvqh.onrender.com/api
+https://crm-backend-assignment-onc1.onrender.com/api
 ```
 
 

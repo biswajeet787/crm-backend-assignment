@@ -1,4 +1,3 @@
-
 # CRM Sales Management API
 
 A REST API for a Sales CRM built with Node.js, TypeScript, Express, MongoDB, and Mongoose. It manages users, leads, customers, deals, activities, timelines, and sales analytics with request validation and role-based access control.
@@ -7,13 +6,30 @@ For setup instructions, see [SETUP.md](SETUP.md). For authentication and permiss
 
 See [PROJECT_LINKS.md](PROJECT_LINKS.md) for repository, deployment, and database-design links.
 
+## Live Deployment
+
+The CRM Sales Management API is deployed on Render.
+
+- **Live API:** https://crm-backend-assignment-onc1.onrender.com/
+- **Health Check:** https://crm-backend-assignment-onc1.onrender.com/health
+- **API Base URL:** https://crm-backend-assignment-onc1.onrender.com/api
+- **GitHub Repository:** https://github.com/biswajeet787/crm-backend-assignment
+
+The root endpoint returns a welcome message. The health endpoint reports the API status and database connection state.
+
+### Live API Homepage
+
+The following screenshot shows the deployed API responding successfully.
+
+![CRM Sales Management API running on Render](screenshots/api-homepage.png)
+
 ## Project Structure
 
 ```text
 crm-backend-assignment/
 ├── source-code/          TypeScript API and database scripts
 ├── api-documentation/    Postman request workspace
-├── screenshots/          MongoDB and API screenshots
+├── screenshots/          API, MongoDB, and Postman screenshots
 ├── API_EXAMPLES.md       API request and response examples
 ├── AUTHENTICATION.md     Authentication guide
 ├── PROJECT_LINKS.md      Project links
@@ -78,7 +94,7 @@ Check the `database` field in the response before using database-backed endpoint
 
 For macOS or Linux, use `cd source-code` instead of `Set-Location .\source-code`.
 
-See [SETUP.md](SETUP.md) for the complete setup instructions.
+See [SETUP.md](SETUP.md) for complete setup instructions.
 
 ## Environment Variables
 
@@ -91,7 +107,7 @@ Create a local file at `source-code/.env`.
 | `MONGODB_URI` | Yes | MongoDB connection string |
 | `JWT_SECRET` | Yes | Access-token signing secret; at least 32 characters |
 | `JWT_REFRESH_SECRET` | Yes | Refresh-token secret; at least 32 characters and different from `JWT_SECRET` |
-| `ACCESS_TOKEN_TTL` | No | Access-token lifetime; defaults to 2h |
+| `ACCESS_TOKEN_TTL` | No | Access-token lifetime; defaults to `2h` |
 | `CORS_ORIGIN` | No | Comma-separated allowed browser origins |
 | `SEED_ADMIN_NAME` | For admin seeding | Initial administrator name |
 | `SEED_ADMIN_EMAIL` | For admin seeding | Initial administrator email |
@@ -100,7 +116,7 @@ Create a local file at `source-code/.env`.
 
 Example MongoDB Atlas connection string:
 
-```env
+```dotenv
 MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-host>/crm_sales_db?retryWrites=true&w=majority&appName=crm-cluster
 ```
 
@@ -120,10 +136,12 @@ This project uses MongoDB Atlas as its cloud database and Mongoose for database 
 2. Create a project for the CRM Sales Management System.
 3. Create a cluster. The Free tier is suitable for development and testing.
 4. Create a database user with a strong password and appropriate permissions.
-5. Add your development machine's IP address to the Atlas IP Access List.
+5. Configure the Atlas IP Access List to permit connections from the required network locations.
 6. Open your cluster and select **Connect → Drivers**.
 7. Select Node.js and copy the connection string.
 8. Add the connection string to `MONGODB_URI` in `source-code/.env`.
+
+For the deployed service, configure `MONGODB_URI` through the Render environment settings rather than committing credentials to the repository.
 
 ### Database Initialization
 
@@ -131,7 +149,7 @@ Mongoose models define the application's schemas, relationships, validation rule
 
 MongoDB generally creates the database and collections when the application first writes data to them.
 
-The intended application database name is `crm_sales_db`. Confirm that the database name in `MONGODB_URI` matches this name. If the URI specifies `test`, MongoDB will use `test` instead.
+The intended application database name is `crm_sales_db`. Confirm that the database name in `MONGODB_URI` matches this name. If the URI specifies another database, MongoDB will use that database instead.
 
 The server uses a 10-second server-selection timeout. The HTTP listener may start even if the database connection fails. Check `GET /health` before using database-backed endpoints.
 
@@ -152,13 +170,13 @@ The server uses a 10-second server-selection timeout. The HTTP listener may star
 
 The following screenshot shows the collections used by the CRM backend.
 
-![MongoDB Atlas Collections](./screenshots/mongodb-collections.png)
+![MongoDB Atlas Collections](screenshots/mongodb-collections.png)
 
 #### MongoDB User Document
 
-This screenshot demonstrates a stored user document. Personal information, password hashes, refresh-token hashes, and other sensitive values must be redacted before publishing.
+This screenshot demonstrates a stored user document. Ensure that personal information, password hashes, refresh-token hashes, and other sensitive values are redacted before publishing.
 
-![MongoDB User Document](./screenshots/mongodb-user-document.png)
+![MongoDB User Document](screenshots/mongodb-user-document.png)
 
 ### Database Indexes
 
@@ -208,7 +226,9 @@ The access-token lifetime defaults to two hours. The refresh cookie lasts seven 
 
 Passwords are hashed before being stored.
 
-**Security note:** The current registration schema accepts an optional `role` field, including `admin`, although registration defaults to `sales_executive`. This can allow an unauthenticated caller to request a privileged role. Restrict public registration to the intended public role before exposing this endpoint in a real deployment. See [AUTHENTICATION.md](AUTHENTICATION.md) for further details.
+**Security note:** The existing registration schema was identified as potentially accepting a caller-supplied `role`, including `admin`, although registration defaults to `sales_executive`. If this behavior is still present in the code, an unauthenticated caller could request a privileged role. Public registration should assign the permitted public role on the server and ignore or reject privileged role values supplied by clients. Verify and fix this before treating the API as production-ready.
+
+See [AUTHENTICATION.md](AUTHENTICATION.md) for further details.
 
 ## User Roles and Permissions
 
@@ -242,14 +262,15 @@ These assumptions are inferred from the current models and service code and shou
 - Deal amounts use one deployment-wide currency. There is no currency field in the deal model.
 - Phone numbers use a ten-digit local format.
 - A sales manager's team consists of users whose `managerId` points directly to that manager.
-- Public sign-up appears intended to create sales executives, although the current registration schema also accepts a role supplied by the caller.
+- Public sign-up appears intended to create sales executives. Verify that the implementation does not allow clients to assign privileged roles.
 
 ## API Route Map
 
-All application routes are under `/api`. The health endpoint is public at `/health`.
+All application routes are under `/api`. The health endpoint is public at `/health`. The root endpoint `/` returns an API welcome message.
 
 | Area | Routes |
 |---|---|
+| Root | `GET /` |
 | Health | `GET /health` |
 | Authentication | `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/refresh`, `POST /api/auth/logout`, `GET /api/auth/me` |
 | Users | `GET /api/users`, `POST /api/users`, `GET /api/users/:id`, `PATCH /api/users/:id`, `PATCH /api/users/:id/status`, `DELETE /api/users/:id` |
@@ -283,6 +304,8 @@ Error responses use a structure such as:
 
 The exact response fields depend on the endpoint.
 
+- [Database Design](DATABASE_DESIGN.md)
+
 ## Postman Requests
 
 The Postman request workspace is available in [`api-documentation/postman/collections/CRM Sales Management APIs`](api-documentation/postman/collections/CRM%20Sales%20Management%20APIs).
@@ -291,10 +314,20 @@ For easy import into Postman, use the exported collection JSON file:
 
 [**Download the CRM Sales Management APIs Collection**](api-documentation/postman/CRM-Sales-Management-APIs.postman_collection.json)
 
-For local use, set the Postman `baseUrl` to:
+### Local API
+
+For local testing, set the Postman `baseUrl` to:
 
 ```text
 http://localhost:5000/api
+```
+
+### Deployed API
+
+For testing the hosted backend, set the Postman `baseUrl` to:
+
+```text
+https://crm-backend-assignment-onc1.onrender.com/api
 ```
 
 Register or sign in, then use the returned access token for protected requests. Postman should retain the refresh cookie for refresh and logout calls.
@@ -303,26 +336,13 @@ Register or sign in, then use the returned access token for protected requests. 
 
 ![CRM Sales Management APIs Postman Collection](screenshots/postman-collection.png)
 
-See [`API_EXAMPLES.md`](API_EXAMPLES.md) and [`SETUP.md`](SETUP.md) for request examples and setup instructions.
+See [API_EXAMPLES.md](API_EXAMPLES.md) and [SETUP.md](SETUP.md) for request examples and setup instructions.
 
 ## Troubleshooting
 
 - **Database connection fails:** Check `MONGODB_URI`, Atlas IP Access List, database credentials, and network connectivity.
 - **Database does not appear in Atlas:** MongoDB generally creates the database after the first successful write. Check the database name in the URI and refresh Data Explorer.
-- **`404 Route not found` at `/`:** The API does not define a root route. Use `GET /health`.
+- **API root:** Open `/` to see the welcome message, or open `/health` to verify API and database status.
 - **Request validation fails:** Read the `details` array and provide the required fields.
 - **Lead conversion fails:** Confirm that the MongoDB deployment supports transactions.
 - **Protected endpoint returns `401` or `403`:** Sign in, send the access token as `Authorization: Bearer <token>`, and confirm the user's role has permission for that route.
-
-## Security Checklist
-
-- Do not commit `.env`, database credentials, JWT secrets, access tokens, refresh tokens, password hashes, or refresh-token hashes.
-- Use strong, unique JWT secrets.
-- Restrict Atlas network access to the required IP addresses.
-- Use HTTPS in deployed environments.
-- Review public registration role validation before exposing the API.
-- Redact personal and sensitive information from screenshots.
-
-## License
-
-Add the applicable license information here if the project has a license.

@@ -1,18 +1,33 @@
 # Project Links
 
 | Resource | Link |
-| --- | --- |
-| GitHub repository | [crm-backend-assignment](https://github.com/sipu-git/crm-backend-assignment.git) |
+|---|---|
+| GitHub Repository | [CRM Sales Management API](https://github.com/biswajeet787/crm-backend-assignment) |
+| Deployed API | [Live CRM API](https://crm-backend-assignment-onc1.onrender.com/) |
+| API Health Check | [Health Endpoint](https://crm-backend-assignment-onc1.onrender.com/health) |
+| API Base URL | [Live API Base URL](https://crm-backend-assignment-onc1.onrender.com/api) |
+| Database Design | [CRM Database Design](DATABASE_DESIGN.md) |
 
-| Deployed Platform | [crm-backend-assignment-pvqh.onrender.com](https://crm-backend-assignment-pvqh.onrender.com) |
+## Project Documentation
 
-| API base URL | [https://crm-backend-assignment-pvqh.onrender.com/api](https://crm-backend-assignment-pvqh.onrender.com/api) |
-
-| Database design | [Eraser database design](https://app.eraser.io/workspace/vlP08gAqXk3Zn3ZAPfB3?origin=share) |
-
-## Project documentation
-
-- [Setup guide](SETUP.md)
-- [Authentication details](AUTHENTICATION.md)
-- [Sample API requests and responses](API_EXAMPLES.md)
+- [Setup Guide](SETUP.md)
+- [Authentication Details](AUTHENTICATION.md)
+- [Sample API Requests and Responses](API_EXAMPLES.md)
 - [Project README](README.md)
+- [Database Design](DATABASE_DESIGN.md)
+
+## API Testing
+
+Use the following base URL in Postman.
+
+**Local development**
+```text
+http://localhost:5000/api
+```
+
+**Deployed API**
+```text
+https://crm-backend-assignment-onc1.onrender.com/api
+```
+
+The health endpoint can be used to verify the API and database connection status before testing database-dependent endpoints.
